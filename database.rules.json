@@ -1,0 +1,43 @@
+{
+    "rules": {
+        "site_presets": {
+            ".read": true,
+            ".write": "auth != null && (auth.token.email === 'admin@harnamfoods.com' || auth.token.email === 'shadowxg@gmail.com')"
+        },
+        "products": {
+            ".read": true,
+            ".write": "auth != null && (auth.token.email === 'admin@harnamfoods.com' || auth.token.email === 'shadowxg@gmail.com')"
+        },
+        "orders": {
+            ".read": "auth != null && (auth.token.email === 'admin@harnamfoods.com' || auth.token.email === 'shadowxg@gmail.com')",
+            "$orderId": {
+                ".read": "auth != null && (data.child('userId').val() === auth.uid || auth.token.email === 'admin@harnamfoods.com' || auth.token.email === 'shadowxg@gmail.com')",
+                ".write": "auth != null"
+            }
+        },
+        "users": {
+            "$uid": {
+                ".read": "auth != null && (auth.uid === $uid || auth.token.email === 'admin@harnamfoods.com' || auth.token.email === 'shadowxg@gmail.com')",
+                ".write": "auth != null && (auth.uid === $uid || auth.token.email === 'admin@harnamfoods.com' || auth.token.email === 'shadowxg@gmail.com')"
+            }
+        },
+        "guest_carts": {
+            "$guestId": {
+                ".read": true,
+                ".write": true
+            }
+        },
+        "messages": {
+            ".read": "auth != null && (auth.token.email === 'admin@harnamfoods.com' || auth.token.email === 'shadowxg@gmail.com')",
+            "$messageId": {
+                ".write": true
+            }
+        },
+        "activity_logs": {
+            ".read": "auth != null && (auth.token.email === 'admin@harnamfoods.com' || auth.token.email === 'shadowxg@gmail.com')",
+            ".write": "auth != null"
+        },
+        ".read": false,
+        ".write": false
+    }
+}
