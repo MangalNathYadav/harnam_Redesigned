@@ -9,21 +9,29 @@ import {
     Search,
     Edit2,
     Trash2,
-    Image as ImageIcon,
-    Tag,
-    IndianRupee,
-    Package,
-    X,
-    Check
+    Package
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+
+interface Product {
+    firebaseId: string;
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    category: string;
+    stock: number;
+    image: string;
+    rating: number;
+    offer: string;
+}
 
 export default function AdminProducts() {
-    const [products, setProducts] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [products, setProducts] = useState<Product[]>([]);
     const [search, setSearch] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editingProduct, setEditingProduct] = useState<any>(null);
+    const [editingProduct, setEditingProduct] = useState<Product | null>(null);
     const [form, setForm] = useState({
         name: "",
         description: "",
@@ -40,12 +48,11 @@ export default function AdminProducts() {
         const unsubscribe = onValue(productsRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                setProducts(Object.entries(data).map(([id, val]: [string, any]) => ({
+                setProducts(Object.entries(data as Record<string, Product>).map(([id, val]) => ({
                     ...val,
                     firebaseId: id
                 })));
             }
-            setLoading(false);
         });
         return () => unsubscribe();
     }, []);
@@ -121,7 +128,7 @@ export default function AdminProducts() {
                         className="bg-white rounded-[2rem] border border-border p-6 shadow-sm hover:shadow-xl smooth-transition group"
                     >
                         <div className="relative h-48 w-full rounded-2xl overflow-hidden bg-zinc-50 mb-6 border border-zinc-100">
-                            <img src={product.image} alt={product.name} className="object-cover w-full h-full group-hover:scale-110 smooth-transition" />
+                            <Image src={product.image} alt={product.name} fill className="object-cover group-hover:scale-110 smooth-transition" />
                             <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 smooth-transition translate-y-2 group-hover:translate-y-0 text-white">
                                 <button
                                     onClick={() => {

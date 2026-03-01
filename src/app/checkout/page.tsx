@@ -6,13 +6,26 @@ import { db } from "@/lib/firebase";
 import { ref, onValue, set, push, serverTimestamp } from "firebase/database";
 import { useAuth } from "@/context/AuthContext";
 import { CheckCircle2, CreditCard, Truck, User, ArrowLeft, ArrowRight, ShieldCheck, ShoppingBag } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
+
+interface CartItem {
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    image: string;
+}
+
+interface Presets {
+    isFestivalMode: boolean;
+    discountPercent: number;
+}
 
 export default function CheckoutPage() {
     const { user } = useAuth();
     const router = useRouter();
-    const [cartItems, setCartItems] = useState<any[]>([]);
+    const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
     const [orderComplete, setOrderComplete] = useState(false);
@@ -32,7 +45,7 @@ export default function CheckoutPage() {
         });
     }, [user]);
 
-    const [presets, setPresets] = useState<any>(null);
+    const [presets, setPresets] = useState<Presets | null>(null);
 
     useEffect(() => {
         onValue(ref(db, 'site_presets'), (snapshot) => {
@@ -53,8 +66,6 @@ export default function CheckoutPage() {
         setLoading(true);
         const guestId = localStorage.getItem("guestId");
 
-        // Use a global orders collection for easier admin tracking, or user-specific for privacy
-        // For this e-commerce, let's use a flat orders collection with userId field
         const orderRef = ref(db, 'orders');
         const newOrderRef = push(orderRef);
         const orderId = `HNM-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
@@ -128,7 +139,7 @@ export default function CheckoutPage() {
                     </div>
                     <h2 className="text-3xl font-bold mb-4">Purely Authentic!</h2>
                     <p className="text-muted-foreground mb-12">
-                        Your order has been placed successfully. We're preparing your spices for delivery.
+                        Your order has been placed successfully. We&apos;re preparing your spices for delivery.
                     </p>
                     <button
                         onClick={() => router.push('/products')}
@@ -225,7 +236,7 @@ export default function CheckoutPage() {
                                             disabled={loading}
                                             className="checkout-btn flex-1 h-16"
                                         >
-                                            {loading ? <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div> : `Complete Order • ₹${total}`}
+                                            {loading ? <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div> : `Complete Order • ₹${total.toFixed(2)}`}
                                         </button>
                                     </div>
                                 </motion.div>

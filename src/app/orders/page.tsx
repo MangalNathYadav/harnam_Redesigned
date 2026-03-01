@@ -2,18 +2,38 @@
 
 import { useState, useEffect } from "react";
 import { db } from "@/lib/firebase";
-import { ref, onValue, query, orderByChild, equalTo } from "firebase/database";
+import { ref, onValue } from "firebase/database";
 import { useAuth } from "@/context/AuthContext";
-import { Package, Truck, Calendar, ArrowRight, ShoppingBag, Clock, ChevronRight } from "lucide-react";
+import { Truck, ArrowRight, ShoppingBag, Clock, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 
+interface OrderItem {
+    id: string;
+    name: string;
+    image: string;
+    price: number;
+    quantity: number;
+}
+
+interface Order {
+    orderId: string;
+    userId?: string;
+    guestId?: string;
+    timestamp: number;
+    status: string;
+    pricing: { total: number };
+    paymentMethod: string;
+    estimatedDelivery: string | number;
+    items: OrderItem[];
+}
+
 export default function OrdersPage() {
     const { user, loading: authLoading } = useAuth();
-    const [orders, setOrders] = useState<any[]>([]);
+    const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -21,19 +41,18 @@ export default function OrdersPage() {
 
         const guestId = localStorage.getItem("guestId");
         if (!user && !guestId) {
-            setLoading(false);
+            setTimeout(() => setLoading(false), 0);
             return;
         }
 
         const ordersRef = ref(db, 'orders');
-        // We'll filter client-side for now as RTDB indexing can be tricky for multi-field queries without rules setup
         const unsubscribe = onValue(ordersRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                const allOrders = Object.values(data);
-                const filtered = allOrders.filter((o: any) =>
+                const allOrders = Object.values(data as Record<string, Order>);
+                const filtered = allOrders.filter((o: Order) =>
                     user ? o.userId === user.uid : o.guestId === guestId
-                ).sort((a: any, b: any) => b.timestamp - a.timestamp);
+                ).sort((a: Order, b: Order) => b.timestamp - a.timestamp);
                 setOrders(filtered);
             }
             setLoading(false);
@@ -100,7 +119,7 @@ export default function OrdersPage() {
 
                                     <div className="grid md:grid-cols-2 gap-8 items-center bg-zinc-50/50 rounded-2xl p-6 border border-zinc-50">
                                         <div className="flex -space-x-3">
-                                            {order.items.slice(0, 4).map((item: any, i: number) => (
+                                            {order.items.slice(0, 4).map((item: OrderItem, i: number) => (
                                                 <div key={i} className="w-12 h-12 rounded-full border-2 border-white overflow-hidden bg-zinc-100 relative shadow-sm">
                                                     <Image src={item.image} alt={item.name} fill className="object-cover" />
                                                 </div>

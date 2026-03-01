@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { db } from "@/lib/firebase";
 import { ref, onValue } from "firebase/database";
 import { ArrowRight, ChevronDown, Sparkles, Flame } from "lucide-react";
@@ -18,11 +18,16 @@ type Particle =
 const EnvironmentalEffects = ({ presets }: { presets: SitePresets | null }) => {
     const effect = presets?.activePresetId;
 
-    const particles = useMemo(() => {
-        if (!effect) return [] as Particle[];
+    const [particles, setParticles] = useState<Particle[]>([]);
+
+    useEffect(() => {
+        if (!effect) {
+            const timer = setTimeout(() => setParticles([]), 0);
+            return () => clearTimeout(timer);
+        }
 
         if (effect === 'winter' || effect === 'christmas') {
-            return [...Array(30)].map(() => ({
+            const snow = [...Array(30)].map(() => ({
                 type: 'snow' as const,
                 width: Math.random() * 6 + 2,
                 height: Math.random() * 6 + 2,
@@ -30,20 +35,24 @@ const EnvironmentalEffects = ({ presets }: { presets: SitePresets | null }) => {
                 duration: Math.random() * 3 + 2,
                 delay: Math.random() * 5,
             }));
+            setTimeout(() => setParticles(snow), 0);
+            return;
         }
 
         if (effect === 'monsoon') {
-            return [...Array(50)].map(() => ({
+            const rain = [...Array(50)].map(() => ({
                 type: 'rain' as const,
                 left: Math.random() * 100,
                 duration: Math.random() * 0.5 + 0.5,
                 delay: Math.random() * 2,
             }));
+            setTimeout(() => setParticles(rain), 0);
+            return;
         }
 
         if (effect === 'spring' || effect === 'holi') {
             const colors = ['bg-pink-200', 'bg-red-200', 'bg-yellow-200', 'bg-purple-200'];
-            return [...Array(20)].map(() => ({
+            const flowers = [...Array(20)].map(() => ({
                 type: 'flower' as const,
                 color: colors[Math.floor(Math.random() * colors.length)],
                 size: Math.random() * 10 + 5,
@@ -51,9 +60,11 @@ const EnvironmentalEffects = ({ presets }: { presets: SitePresets | null }) => {
                 duration: Math.random() * 5 + 5,
                 delay: Math.random() * 10,
             }));
+            setTimeout(() => setParticles(flowers), 0);
+            return;
         }
 
-        return [] as Particle[];
+        setTimeout(() => setParticles([]), 0);
     }, [effect]);
 
     if (!effect || particles.length === 0) return null;

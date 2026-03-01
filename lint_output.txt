@@ -1,0 +1,142 @@
+
+> harnam-foods@0.1.0 lint
+> eslint
+
+
+/home/shadowxg/demonlord/src/app/admin/contacts/page.tsx
+    8:5    warning  'User' is defined but never used                                 @typescript-eslint/no-unused-vars
+   10:5    warning  'Calendar' is defined but never used                             @typescript-eslint/no-unused-vars
+   14:5    warning  'XCircle' is defined but never used                              @typescript-eslint/no-unused-vars
+   16:18   warning  'AnimatePresence' is defined but never used                      @typescript-eslint/no-unused-vars
+   19:46   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   28:75   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   31:30   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   31:38   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   61:107  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  101:45   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  101:60   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+/home/shadowxg/demonlord/src/app/admin/layout.tsx
+  17:5   warning  'ChevronRight' is defined but never used      @typescript-eslint/no-unused-vars
+  21:10  warning  'motion' is defined but never used            @typescript-eslint/no-unused-vars
+  21:18  warning  'AnimatePresence' is defined but never used   @typescript-eslint/no-unused-vars
+  30:11  warning  'isAdmin' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/home/shadowxg/demonlord/src/app/admin/logs/page.tsx
+  28:12  warning  'loading' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  37:79  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+
+/home/shadowxg/demonlord/src/app/admin/orders/page.tsx
+    7:5   warning  'ShoppingBag' is defined but never used                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+    9:5   warning  'Filter' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+   10:5   warning  'ChevronRight' is defined but never used                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+   11:5   warning  'ArrowLeft' is defined but never used                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+   12:5   warning  'Truck' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   14:5   warning  'Clock' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   22:42  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   23:12  warning  'loading' is assigned a value but never used                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+   25:56  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   32:56  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   32:64  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  230:77  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  233:57  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  247:77  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+
+/home/shadowxg/demonlord/src/app/admin/page.tsx
+  11:5   warning  'ArrowUpRight' is defined but never used                         @typescript-eslint/no-unused-vars
+  13:5   warning  'CheckCircle2' is defined but never used                         @typescript-eslint/no-unused-vars
+  28:54  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  36:64  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  37:51  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  46:49  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  46:57  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  70:82  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  70:89  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/home/shadowxg/demonlord/src/app/admin/presets/page.tsx
+  13:5   warning  'Layout' is defined but never used           @typescript-eslint/no-unused-vars
+  20:5   warning  'ChevronDown' is defined but never used      @typescript-eslint/no-unused-vars
+  24:10  warning  'motion' is defined but never used           @typescript-eslint/no-unused-vars
+  24:18  warning  'AnimatePresence' is defined but never used  @typescript-eslint/no-unused-vars
+  53:44  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+  71:44  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+  75:32  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+
+/home/shadowxg/demonlord/src/app/admin/products/page.tsx
+   12:14  warning  'ImageIcon' is defined but never used                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+   13:5   warning  'Tag' is defined but never used                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+   14:5   warning  'IndianRupee' is defined but never used                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+   16:5   warning  'X' is defined but never used                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+   17:5   warning  'Check' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   22:46  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   23:12  warning  'loading' is assigned a value but never used                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+   26:58  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   43:75  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  124:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/shadowxg/demonlord/src/app/admin/users/page.tsx
+   7:5   warning  'Users' is defined but never used             @typescript-eslint/no-unused-vars
+  11:5   warning  'ShieldCheck' is defined but never used       @typescript-eslint/no-unused-vars
+  16:5   warning  'ShoppingBag' is defined but never used       @typescript-eslint/no-unused-vars
+  18:10  warning  'motion' is defined but never used            @typescript-eslint/no-unused-vars
+  21:40  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  22:12  warning  'loading' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  30:73  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+
+/home/shadowxg/demonlord/src/app/admin_login/page.tsx
+  7:8  warning  'Image' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/shadowxg/demonlord/src/app/checkout/page.tsx
+    9:18  warning  'AnimatePresence' is defined but never used                      @typescript-eslint/no-unused-vars
+   15:48  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   35:44  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  131:68  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/home/shadowxg/demonlord/src/app/orders/[id]/page.tsx
+    8:79   warning  'MapIcon' is defined but never used        @typescript-eslint/no-unused-vars
+    9:10   warning  'motion' is defined but never used         @typescript-eslint/no-unused-vars
+   17:13   warning  'user' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   18:40   error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+   28:60   error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+   88:98   error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+   89:100  error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+  104:65   error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+  151:61   error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+
+/home/shadowxg/demonlord/src/app/products/[id]/page.tsx
+  92:81  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/shadowxg/demonlord/src/app/products/page.tsx
+   56:75  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  111:18  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+  134:18  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+
+/home/shadowxg/demonlord/src/app/profile/page.tsx
+  28:57  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  29:59  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  31:12  warning  'loading' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  44:82  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  45:62  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  45:86  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+
+/home/shadowxg/demonlord/src/components/Hero.tsx
+   5:31  warning  'useMemo' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+  25:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/home/shadowxg/demonlord/src/components/Hero.tsx:25:13
+  23 |     useEffect(() => {
+  24 |         if (!effect) {
+> 25 |             setParticles([]);
+     |             ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  26 |             return;
+  27 |         }
+  28 |  react-hooks/set-state-in-effect
+
+✖ 90 problems (46 errors, 44 warnings)
+

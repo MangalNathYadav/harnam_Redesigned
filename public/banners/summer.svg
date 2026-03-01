@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
+  <defs>
+    <linearGradient id="summer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f7971e"/>
+      <stop offset="100%" style="stop-color:#ffd200"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="80%" cy="20%" r="30%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.4"/>
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="200" fill="url(#summer)"/>
+  <circle cx="640" cy="40" r="120" fill="url(#sun)"/>
+  <!-- Sun rays -->
+  <line x1="640" y1="40" x2="640" y2="-20" stroke="#fff" stroke-width="2" opacity="0.15"/>
+  <line x1="640" y1="40" x2="700" y2="-10" stroke="#fff" stroke-width="2" opacity="0.15"/>
+  <line x1="640" y1="40" x2="580" y2="-10" stroke="#fff" stroke-width="2" opacity="0.15"/>
+  <line x1="640" y1="40" x2="720" y2="20" stroke="#fff" stroke-width="2" opacity="0.12"/>
+  <line x1="640" y1="40" x2="560" y2="20" stroke="#fff" stroke-width="2" opacity="0.12"/>
+  <!-- Heat waves -->
+  <path d="M0,180 Q100,170 200,180 Q300,190 400,180 Q500,170 600,180 Q700,190 800,180" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.15"/>
+  <path d="M0,190 Q100,180 200,190 Q300,200 400,190 Q500,180 600,190 Q700,200 800,190" stroke="#fff" stroke-width="1" fill="none" opacity="0.1"/>
+  <!-- Decorative dots -->
+  <circle cx="100" cy="50" r="5" fill="#fff" opacity="0.2"/>
+  <circle cx="200" cy="150" r="6" fill="#fff" opacity="0.15"/>
+  <circle cx="500" cy="30" r="4" fill="#fff" opacity="0.18"/>
+  <circle cx="350" cy="160" r="5" fill="#fff" opacity="0.12"/>
+  <text x="400" y="85" dominant-baseline="middle" text-anchor="middle" font-family="Georgia, serif" font-size="54" fill="#ffffff" font-weight="bold" letter-spacing="3">Summer Vibes</text>
+  <text x="400" y="135" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#fff" opacity="0.85" letter-spacing="6" font-weight="bold">COOL SPICES BY HARNAM FOODS</text>
+</svg>

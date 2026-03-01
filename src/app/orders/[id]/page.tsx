@@ -5,17 +5,50 @@ import { useParams, useRouter } from "next/navigation";
 import { db } from "@/lib/firebase";
 import { ref, onValue } from "firebase/database";
 import { useAuth } from "@/context/AuthContext";
-import { ArrowLeft, Package, MapPin, Truck, CheckCircle2, Clock, ShieldCheck, MapIcon } from "lucide-react";
-import { motion } from "framer-motion";
+import { ArrowLeft, Package, MapPin, Truck, CheckCircle2, Clock, ShieldCheck } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 
+interface OrderItem {
+    name: string;
+    price: number;
+    quantity: number;
+    image: string;
+}
+
+interface OrderTimeline {
+    status: string;
+    message: string;
+    timestamp: string;
+}
+
+interface Order {
+    orderId: string;
+    status: string;
+    timeline: OrderTimeline[];
+    customer: {
+        firstName: string;
+        lastName: string;
+        address: string;
+        city: string;
+        state: string;
+        pincode: string;
+    };
+    items: OrderItem[];
+    pricing: {
+        total: number;
+        subtotal: number;
+        shipping: number;
+    };
+    paymentMethod: string;
+}
+
 export default function OrderTrackingPage() {
     const params = useParams();
     const router = useRouter();
-    const { user, loading: authLoading } = useAuth();
-    const [order, setOrder] = useState<any>(null);
+    const { loading: authLoading } = useAuth();
+    const [order, setOrder] = useState<Order | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -25,8 +58,8 @@ export default function OrderTrackingPage() {
         const unsubscribe = onValue(ordersRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                const found = Object.values(data).find((o: any) => o.orderId === params.id);
-                setOrder(found);
+                const found = Object.values(data as Record<string, Order>).find((o) => o.orderId === params.id);
+                setOrder(found || null);
             }
             setLoading(false);
         });
@@ -85,8 +118,8 @@ export default function OrderTrackingPage() {
                                                     <div>
                                                         <p className={`font-black uppercase tracking-tighter text-xs ${isActive ? 'text-zinc-900' : 'text-zinc-300'}`}>{step.label}</p>
                                                         <p className="text-[10px] text-zinc-400 font-bold mt-1">
-                                                            {isActive && order.timeline.find((t: any) => t.status === step.status)?.timestamp
-                                                                ? new Date(order.timeline.find((t: any) => t.status === step.status).timestamp).toLocaleDateString()
+                                                            {isActive && order.timeline.find((t) => t.status === step.status)?.timestamp
+                                                                ? new Date(order.timeline.find((t) => t.status === step.status)!.timestamp).toLocaleDateString()
                                                                 : 'TBA'}
                                                         </p>
                                                     </div>
@@ -101,7 +134,7 @@ export default function OrderTrackingPage() {
                                         <Clock className="w-5 h-5 text-primary" /> Order Updates
                                     </h3>
                                     <div className="space-y-6">
-                                        {order.timeline.map((t: any, i: number) => (
+                                        {order.timeline.map((t, i) => (
                                             <div key={i} className="flex gap-4">
                                                 <div className="w-2 h-2 rounded-full bg-primary mt-2 shrink-0 shadow-lg shadow-primary/50" />
                                                 <div>
@@ -148,7 +181,7 @@ export default function OrderTrackingPage() {
                             <div className="bg-white rounded-[2.5rem] p-8 border border-zinc-50 shadow-xl shadow-zinc-100/30">
                                 <h3 className="text-xl font-bold mb-8">Items Ordered</h3>
                                 <div className="space-y-6">
-                                    {order.items.map((item: any, i: number) => (
+                                    {order.items.map((item, i) => (
                                         <div key={i} className="flex gap-4 items-center">
                                             <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-zinc-50 shrink-0 shadow-sm">
                                                 <Image src={item.image} alt={item.name} fill className="object-cover" />

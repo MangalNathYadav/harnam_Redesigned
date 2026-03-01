@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
+  <defs>
+    <linearGradient id="spring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#56ab2f"/>
+      <stop offset="100%" style="stop-color:#a8e063"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="200" fill="url(#spring)"/>
+  <!-- Flower petals -->
+  <circle cx="80" cy="40" r="8" fill="#fff" opacity="0.2"/>
+  <circle cx="90" cy="50" r="6" fill="#fff" opacity="0.15"/>
+  <circle cx="70" cy="50" r="6" fill="#fff" opacity="0.15"/>
+  <circle cx="200" cy="150" r="10" fill="#fff" opacity="0.18"/>
+  <circle cx="210" cy="165" r="7" fill="#fff" opacity="0.12"/>
+  <circle cx="190" cy="165" r="7" fill="#fff" opacity="0.12"/>
+  <circle cx="650" cy="50" r="9" fill="#fff" opacity="0.2"/>
+  <circle cx="660" cy="63" r="6" fill="#fff" opacity="0.15"/>
+  <circle cx="640" cy="63" r="6" fill="#fff" opacity="0.15"/>
+  <circle cx="720" cy="150" r="8" fill="#fff" opacity="0.18"/>
+  <circle cx="730" cy="162" r="5" fill="#fff" opacity="0.12"/>
+  <circle cx="710" cy="162" r="5" fill="#fff" opacity="0.12"/>
+  <!-- Leaves -->
+  <ellipse cx="350" cy="170" rx="20" ry="8" fill="#fff" opacity="0.1" transform="rotate(-30 350 170)"/>
+  <ellipse cx="500" cy="30" rx="18" ry="7" fill="#fff" opacity="0.1" transform="rotate(20 500 30)"/>
+  <text x="400" y="85" dominant-baseline="middle" text-anchor="middle" font-family="Georgia, serif" font-size="54" fill="#ffffff" font-weight="bold" letter-spacing="3">Spring Collection</text>
+  <text x="400" y="135" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#fff" opacity="0.85" letter-spacing="6" font-weight="bold">FRESH FLAVORS BY HARNAM FOODS</text>
+</svg>

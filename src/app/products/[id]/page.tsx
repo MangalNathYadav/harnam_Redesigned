@@ -58,7 +58,8 @@ export default function ProductDetailPage() {
             gid = "guest_" + Math.random().toString(36).substr(2, 12);
             localStorage.setItem("guestId", gid);
         }
-        setGuestId(gid);
+        const timer = setTimeout(() => setGuestId(gid as string), 0);
+        return () => clearTimeout(timer);
     }, []);
 
     // Sync Product & Similar Products
@@ -88,16 +89,16 @@ export default function ProductDetailPage() {
                 get(allProductsRef).then((allSnapshot) => {
                     const allData = allSnapshot.val();
                     if (allData) {
-                        const others = Object.entries(allData)
-                            .map(([pid, pval]: [string, any]) => ({
+                        const others = Object.entries(allData as Record<string, Record<string, unknown>>)
+                            .map(([pid, pval]) => ({
                                 id: pid,
-                                name: pval.name || "",
-                                description: pval.description || "",
-                                price: pval.price || 0,
-                                stock: pval.stock ?? pval.inStock ?? 0,
-                                category: pval.category || "all",
-                                image: pval.imageBase64 || pval.image || "/placeholder.png",
-                                rating: pval.rating || 4.5,
+                                name: (pval.name as string) || "",
+                                description: (pval.description as string) || "",
+                                price: (pval.price as number) || 0,
+                                stock: (pval.stock as number) ?? (pval.inStock as number) ?? 0,
+                                category: (pval.category as string) || "all",
+                                image: (pval.imageBase64 as string) || (pval.image as string) || "/placeholder.png",
+                                rating: (pval.rating as number) || 4.5,
                             }))
                             .filter(p => p.id !== id)
                             .sort(() => Math.random() - 0.5) // Shuffle for variety
@@ -149,7 +150,7 @@ export default function ProductDetailPage() {
 
             await set(cartRef, currentCart);
             showNotification(`${targetProduct.name} added to cart`, "success");
-        } catch (error) {
+        } catch {
             showNotification("Failed to add to cart", "error");
         }
     };
@@ -172,7 +173,7 @@ export default function ProductDetailPage() {
             }).filter(item => item.quantity > 0);
 
             await set(cartRef, updatedCart);
-        } catch (error) {
+        } catch {
             showNotification("Update failed", "error");
         }
     };

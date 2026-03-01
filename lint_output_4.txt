@@ -1,0 +1,10 @@
+
+> harnam-foods@0.1.0 lint
+> eslint
+
+
+/home/shadowxg/demonlord/src/components/Hero.tsx
+  5:31  warning  'useMemo' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 1 problem (0 errors, 1 warning)
+

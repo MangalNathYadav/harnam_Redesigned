@@ -14,11 +14,9 @@ import {
     LogOut,
     Menu,
     X,
-    ChevronRight,
     Sparkles,
     Activity
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const { user, loading } = useAuth();
@@ -26,19 +24,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const [sidebarOpen, setSidebarOpen] = useState(true);
 
     // Simple Admin Check: For now, we'll allow the owner's email or any specific check
-    const isAdmin = user?.email === "admin@harnamfoods.com" || user?.email === "shadowxg@gmail.com"; // Example
+    const userEmail = user?.email ?? "Admin";
 
     useEffect(() => {
-        if (!loading && !user) {
-            router.push("/");
+        const isAuthed = localStorage.getItem('harnam_admin_auth') === 'true';
+        if (!isAuthed) {
+            router.push("/admin_login");
         }
-    }, [user, loading, router]);
+    }, [router]);
 
-    if (loading) return <div className="min-h-screen flex items-center justify-center bg-[#fdfcfd]">
-        <div className="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
-    </div>;
-
-    if (!user) return null;
+    if (!loading && typeof window !== 'undefined' && localStorage.getItem('harnam_admin_auth') !== 'true') return null;
 
     const menuItems = [
         { icon: <LayoutDashboard size={20} />, label: "Overview", href: "/admin" },
@@ -81,13 +76,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                         ))}
                     </nav>
 
-                    <Link
-                        href="/"
-                        className="flex items-center gap-4 p-3 rounded-2xl hover:bg-zinc-50 text-zinc-400 smooth-transition font-bold text-sm mt-auto"
+                    <button
+                        onClick={() => {
+                            localStorage.removeItem('harnam_admin_auth');
+                            localStorage.removeItem('harnam_admin_user');
+                            router.push('/admin_login');
+                        }}
+                        className="flex items-center gap-4 p-3 rounded-2xl hover:bg-red-50 hover:text-red-600 text-zinc-400 smooth-transition font-bold text-sm mt-auto w-full"
                     >
                         <LogOut size={20} />
-                        {sidebarOpen && <span>Exit Admin</span>}
-                    </Link>
+                        {sidebarOpen && <span>Logout</span>}
+                    </button>
                 </div>
             </aside>
 
@@ -109,11 +108,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                         <h2 className="font-bold text-zinc-900">Harnam Foods Management</h2>
                         <div className="flex items-center gap-4">
                             <div className="text-right hidden sm:block">
-                                <p className="text-xs font-black text-zinc-900">{user.email}</p>
+                                <p className="text-xs font-black text-zinc-900">{userEmail}</p>
                                 <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">Super Administrator</p>
                             </div>
                             <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black border-2 border-white shadow-sm">
-                                {user.email?.[0].toUpperCase()}
+                                {(userEmail[0] || "A").toUpperCase()}
                             </div>
                         </div>
                     </header>

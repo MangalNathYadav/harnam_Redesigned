@@ -10,34 +10,41 @@ import {
     Wind,
     Flame,
     Palette,
-    Layout,
-    Image as ImageIcon,
+    ImageIcon,
     CheckCircle2,
     Calendar,
     CloudRain,
     Snowflake,
     Zap,
-    ChevronDown,
     Layers,
     Settings
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+
+interface Presets {
+    activeTheme: string;
+    isFestivalMode: boolean;
+    festivalName: string;
+    offerBanner: string;
+    heroVideo: string;
+    activePresetId: string;
+    discountPercent?: number;
+}
 
 const FESTIVALS = [
-    { id: "diwali", name: "Diwali", sub: "Festival of Lights", offer: "Flat 25% Off on Gift Boxes!", theme: "Midnight Spice", discount: 25, banner: "/assets/diwali_hero_banner.png" },
-    { id: "holi", name: "Holi", sub: "Festival of Colors", offer: "Rang Barse! Get Free Thandai Masala", theme: "Holi Colors", discount: 15, banner: "/assets/holi_hero_banner.png" },
-    { id: "rakhi", name: "Raksha Bandhan", sub: "Bond of Protection", offer: "Buy 1 Get 1 on Sweets & Spices", theme: "Royal Tradition", discount: 20, banner: "/assets/hero_banner.png" },
-    { id: "eid", name: "Eid-ul-Fitr", sub: "Spirit of Sharing", offer: "Free Biryani Kit on orders above ₹1000", theme: "Midnight Spice", discount: 10, banner: "/assets/hero_banner.png" },
-    { id: "navratri", name: "Navratri", sub: "Nine Nights of Joy", offer: "Up to 50% Off on Vrat Specials", theme: "Royal Tradition", discount: 30, banner: "/assets/hero_banner.png" },
-    { id: "ganesh", name: "Ganesh Chaturthi", sub: "Auspicious Beginnings", offer: "Modak Spice Mix - New Launch!", theme: "Royal Tradition", discount: 10, banner: "/assets/hero_banner.png" },
-    { id: "christmas", name: "Christmas", sub: "The Season of Giving", offer: "Secret Santa Spice Vouchers Inside!", theme: "Winter Warm", discount: 20, banner: "/assets/hero_banner.png" },
+    { id: "diwali", name: "Diwali", sub: "Festival of Lights", offer: "Flat 25% Off on Gift Boxes!", theme: "Midnight Spice", discount: 25, banner: "/banners/diwali_banner_1772389190864.png" },
+    { id: "holi", name: "Holi", sub: "Festival of Colors", offer: "Rang Barse! Get Free Thandai Masala", theme: "Holi Colors", discount: 15, banner: "/banners/holi_banner_1772389206274.png" },
+    { id: "rakhi", name: "Raksha Bandhan", sub: "Bond of Protection", offer: "Buy 1 Get 1 on Sweets & Spices", theme: "Royal Tradition", discount: 20, banner: "/banners/rakhi_banner_1772388914738.png" },
+    { id: "eid", name: "Eid-ul-Fitr", sub: "Spirit of Sharing", offer: "Free Biryani Kit on orders above ₹1000", theme: "Midnight Spice", discount: 10, banner: "/banners/eid_banner_1772388866553.png" },
+    { id: "navratri", name: "Navratri", sub: "Nine Nights of Joy", offer: "Up to 50% Off on Vrat Specials", theme: "Royal Tradition", discount: 30, banner: "/banners/navratri_banner_1772388882179.png" },
+    { id: "ganesh", name: "Ganesh Chaturthi", sub: "Auspicious Beginnings", offer: "Modak Spice Mix - New Launch!", theme: "Royal Tradition", discount: 10, banner: "/banners/ganesh_chaturthi_banner_1772388931359.png" },
+    { id: "christmas", name: "Christmas", sub: "The Season of Giving", offer: "Secret Santa Spice Vouchers Inside!", theme: "Winter Warm", discount: 20, banner: "/banners/christmas_banner_1772388947658.png" },
 ];
 
 const SEASONS = [
-    { id: "summer", name: "Summer", sub: "Cooling & Refreshing", offer: "Beat the Heat with Shikanji Masala!", theme: "Default", discount: 10, banner: "/assets/hero_banner.png" },
-    { id: "monsoon", name: "Monsoon", sub: "Rainy Day Comfort", offer: "Perfect Kadak Chai Kit - 20% Off", theme: "Monsoon Special", discount: 15, banner: "/assets/hero_banner.png" },
-    { id: "winter", name: "Winter", sub: "Warm & Rich", offer: "Healthy Kadha Mix - Stay Warm!", theme: "Winter Warm", discount: 10, banner: "/assets/hero_banner.png" },
-    { id: "spring", name: "Spring", sub: "Fresh & Floral", offer: "Spring Bloom Spice Collection", theme: "Default", discount: 5, banner: "/assets/hero_banner.png" },
+    { id: "summer", name: "Summer", sub: "Cooling & Refreshing", offer: "Beat the Heat with Shikanji Masala!", theme: "Default", discount: 10, banner: "/banners/summer_banner_1772388983131.png" },
+    { id: "monsoon", name: "Monsoon", sub: "Rainy Day Comfort", offer: "Perfect Kadak Chai Kit - 20% Off", theme: "Monsoon Special", discount: 15, banner: "/banners/monsoon_banner_1772389126296.png" },
+    { id: "winter", name: "Winter", sub: "Warm & Rich", offer: "Healthy Kadha Mix - Stay Warm!", theme: "Winter Warm", discount: 10, banner: "/banners/winter_banner_1772389141692.png" },
+    { id: "spring", name: "Spring", sub: "Fresh & Floral", offer: "Spring Bloom Spice Collection", theme: "Default", discount: 5, banner: "/banners/spring_banner_1772389157462.png" },
 ];
 
 const THEMES = [
@@ -50,7 +57,7 @@ const THEMES = [
 ];
 
 export default function AdminPresets() {
-    const [presets, setPresets] = useState<any>({
+    const [presets, setPresets] = useState<Presets>({
         activeTheme: "Default",
         isFestivalMode: false,
         festivalName: "Diwali Special",
@@ -68,20 +75,20 @@ export default function AdminPresets() {
         return () => unsubscribe();
     }, []);
 
-    const savePresets = async (newPresets: any) => {
+    const savePresets = async (newPresets: Presets) => {
         await set(ref(db, 'site_presets'), newPresets);
     };
 
-    const applyEvent = (event: any) => {
+    const applyEvent = (event: Record<string, unknown>) => {
         const updated = {
             ...presets,
             isFestivalMode: true,
-            festivalName: `${event.name} Special`,
-            offerBanner: event.offer,
-            activeTheme: event.theme,
-            activePresetId: event.id,
-            discountPercent: event.discount || 0,
-            heroVideo: event.banner || "/assets/hero_banner.png"
+            festivalName: `${event.name as string} Special`,
+            offerBanner: event.offer as string,
+            activeTheme: event.theme as string,
+            activePresetId: event.id as string,
+            discountPercent: (event.discount as number) || 0,
+            heroVideo: (event.banner as string) || "/assets/hero_banner.png"
         };
         setPresets(updated);
         savePresets(updated);

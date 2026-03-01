@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
+  <defs>
+    <linearGradient id="eid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="50%" style="stop-color:#16213e"/>
+      <stop offset="100%" style="stop-color:#0f3460"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="200" fill="url(#eid)"/>
+  <!-- Crescent moon -->
+  <circle cx="650" cy="55" r="30" fill="#ffd700" opacity="0.3"/>
+  <circle cx="660" cy="48" r="26" fill="#16213e"/>
+  <!-- Stars -->
+  <text x="100" y="40" font-size="14" fill="#ffd700" opacity="0.4">★</text>
+  <text x="250" y="60" font-size="10" fill="#ffd700" opacity="0.3">★</text>
+  <text x="500" y="35" font-size="12" fill="#ffd700" opacity="0.35">★</text>
+  <text x="350" y="25" font-size="8" fill="#ffd700" opacity="0.25">★</text>
+  <text x="720" y="100" font-size="16" fill="#ffd700" opacity="0.3">★</text>
+  <text x="580" y="30" font-size="10" fill="#ffd700" opacity="0.3">★</text>
+  <!-- Decorative arches -->
+  <path d="M0,200 Q100,160 200,200" stroke="#ffd700" stroke-width="1" fill="none" opacity="0.1"/>
+  <path d="M200,200 Q300,160 400,200" stroke="#ffd700" stroke-width="1" fill="none" opacity="0.1"/>
+  <path d="M400,200 Q500,160 600,200" stroke="#ffd700" stroke-width="1" fill="none" opacity="0.1"/>
+  <path d="M600,200 Q700,160 800,200" stroke="#ffd700" stroke-width="1" fill="none" opacity="0.1"/>
+  <text x="400" y="90" dominant-baseline="middle" text-anchor="middle" font-family="Georgia, serif" font-size="52" fill="#ffffff" font-weight="bold" letter-spacing="3">Eid-ul-Fitr</text>
+  <text x="400" y="135" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#ffd700" opacity="0.85" letter-spacing="6" font-weight="bold">FLAVORS OF CELEBRATION</text>
+</svg>

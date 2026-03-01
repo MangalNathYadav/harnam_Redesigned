@@ -4,22 +4,28 @@ import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
 import { ref, onValue } from "firebase/database";
 import {
-    Users,
     Search,
     Mail,
     Calendar,
-    ShieldCheck,
     Smartphone,
     Activity,
     MoreVertical,
-    UserCircle,
-    ShoppingBag
+    UserCircle
 } from "lucide-react";
-import { motion } from "framer-motion";
+
+interface AdminUser {
+    uid: string;
+    email?: string;
+    displayName?: string;
+    profile?: {
+        lastAddress?: {
+            phone?: string;
+        };
+    };
+}
 
 export default function AdminUsers() {
-    const [users, setUsers] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [users, setUsers] = useState<AdminUser[]>([]);
     const [search, setSearch] = useState("");
 
     useEffect(() => {
@@ -27,12 +33,11 @@ export default function AdminUsers() {
         const unsubscribe = onValue(usersRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                setUsers(Object.entries(data).map(([uid, val]: [string, any]) => ({
-                    ...val,
+                setUsers(Object.entries(data as Record<string, unknown>).map(([uid, val]) => ({
+                    ...(val as Omit<AdminUser, 'uid'>),
                     uid
                 })));
             }
-            setLoading(false);
         });
         return () => unsubscribe();
     }, []);
@@ -83,7 +88,7 @@ export default function AdminUsers() {
                                                 {user.email?.[0]?.toUpperCase() || <UserCircle />}
                                             </div>
                                             <div>
-                                                <p className="text-sm font-black text-zinc-900">{user.displayName || "Spice Memeber"}</p>
+                                                <p className="text-sm font-black text-zinc-900">{user.displayName || "Spice Member"}</p>
                                                 <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">Standard Customer</p>
                                             </div>
                                         </div>

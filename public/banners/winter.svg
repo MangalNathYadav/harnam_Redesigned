@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
+  <defs>
+    <linearGradient id="winter" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f2027"/>
+      <stop offset="50%" style="stop-color:#203a43"/>
+      <stop offset="100%" style="stop-color:#2c5364"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="200" fill="url(#winter)"/>
+  <!-- Snowflakes scattered -->
+  <text x="30" y="50" font-size="28" fill="#fff" opacity="0.25">❄</text>
+  <text x="100" y="160" font-size="16" fill="#fff" opacity="0.15">❄</text>
+  <text x="200" y="30" font-size="20" fill="#fff" opacity="0.2">❄</text>
+  <text x="320" y="180" font-size="22" fill="#fff" opacity="0.18">❄</text>
+  <text x="480" y="25" font-size="18" fill="#fff" opacity="0.22">❄</text>
+  <text x="580" y="170" font-size="24" fill="#fff" opacity="0.2">❄</text>
+  <text x="700" y="40" font-size="20" fill="#fff" opacity="0.18">❄</text>
+  <text x="760" y="140" font-size="14" fill="#fff" opacity="0.15">❄</text>
+  <text x="400" y="85" dominant-baseline="middle" text-anchor="middle" font-family="Georgia, serif" font-size="54" fill="#ffffff" font-weight="bold" letter-spacing="4">Winter Specials</text>
+  <text x="400" y="135" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#a8d8ff" letter-spacing="6" font-weight="bold">COZY FLAVORS BY HARNAM FOODS</text>
+</svg>

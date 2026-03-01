@@ -25,7 +25,6 @@ interface LogEntry {
 
 export default function ActivityLogs() {
     const [logs, setLogs] = useState<LogEntry[]>([]);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         // For now, we'll fetch from a generic 'logs' path, 
@@ -34,9 +33,9 @@ export default function ActivityLogs() {
         const unsubscribe = onValue(logsRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                const logList = Object.entries(data).map(([id, val]: [string, any]) => ({
-                    id,
-                    ...val
+                const logList = Object.entries(data as Record<string, LogEntry>).map(([id, val]) => ({
+                    ...val,
+                    id
                 })).sort((a, b) => b.timestamp - a.timestamp);
                 setLogs(logList);
             } else {
@@ -49,7 +48,6 @@ export default function ActivityLogs() {
                     { id: '5', type: 'system', message: 'Database backup completed', timestamp: Date.now() - 1000 * 60 * 60 * 5 },
                 ]);
             }
-            setLoading(false);
         });
         return () => unsubscribe();
     }, []);

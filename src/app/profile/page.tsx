@@ -4,10 +4,8 @@ import { useAuth } from "@/context/AuthContext";
 import {
     User,
     Mail,
-    Settings,
     LogOut,
     Package,
-    IndianRupee,
     TrendingUp,
     MapPin,
     Clock,
@@ -16,34 +14,52 @@ import {
     ShoppingBag,
     Printer
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
 import { ref, onValue } from "firebase/database";
 
+interface Order {
+    orderId: string;
+    userId: string;
+    timestamp: number;
+    status: string;
+    pricing: { total: number };
+    items: { image?: string }[];
+}
+
+interface UserProfile {
+    lastAddress?: {
+        firstName: string;
+        lastName: string;
+        address: string;
+        city: string;
+        state: string;
+        pincode: string;
+        payment?: string;
+    };
+}
+
 export default function ProfilePage() {
     const { user, logout } = useAuth();
-    const [orders, setOrders] = useState<any[]>([]);
-    const [profile, setProfile] = useState<any>(null);
+    const [orders, setOrders] = useState<Order[]>([]);
+    const [profile, setProfile] = useState<UserProfile | null>(null);
     const [cartCount, setCartCount] = useState(0);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!user) {
-            setLoading(false);
-            return;
-        }
+        if (!user) return;
 
         // Fetch User Orders for analytics
         const ordersRef = ref(db, 'orders');
         const unsubscribeOrders = onValue(ordersRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                const userOrders = Object.values(data).filter((o: any) => o.userId === user.uid);
-                setOrders(userOrders.sort((a: any, b: any) => b.timestamp - a.timestamp));
+                const userOrders = Object.values(data as Record<string, Order>).filter((o: Order) => o.userId === user.uid);
+                setOrders(userOrders.sort((a, b) => b.timestamp - a.timestamp));
             }
         });
 
@@ -59,7 +75,6 @@ export default function ProfilePage() {
             const data = snapshot.val();
             const count = data ? (Array.isArray(data) ? data.length : Object.keys(data).length) : 0;
             setCartCount(count);
-            setLoading(false);
         });
 
         return () => {
@@ -267,7 +282,9 @@ export default function ProfilePage() {
                                         <Link key={idx} href={`/orders/${order.orderId}`} className="flex items-center justify-between p-5 hover:bg-zinc-50 rounded-2xl border border-transparent hover:border-zinc-100 smooth-transition group">
                                             <div className="flex items-center gap-4">
                                                 <div className="w-12 h-12 bg-zinc-100 rounded-xl overflow-hidden relative border border-border group-hover:scale-95 smooth-transition">
-                                                    <img src={order.items[0]?.image} alt="" className="object-cover w-full h-full" />
+                                                    {order.items[0]?.image && (
+                                                        <Image src={order.items[0]?.image} alt="" fill className="object-cover" />
+                                                    )}
                                                 </div>
                                                 <div>
                                                     <p className="text-sm font-bold text-zinc-900 italic">#{order.orderId}</p>

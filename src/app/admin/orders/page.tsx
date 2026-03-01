@@ -4,34 +4,66 @@ import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
 import { ref, onValue, set } from "firebase/database";
 import {
-    ShoppingBag,
     Search,
-    Filter,
-    ChevronRight,
-    ArrowLeft,
-    Truck,
     CheckCircle2,
-    Clock,
     XCircle,
     Eye,
     Printer
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+
+interface OrderItem {
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    image: string;
+}
+
+interface OrderTimeline {
+    status: string;
+    message: string;
+    timestamp: string;
+}
+
+interface Order {
+    orderId: string;
+    timestamp: number;
+    status: string;
+    paymentMethod: string;
+    paymentReceived: boolean;
+    customer: {
+        firstName: string;
+        lastName: string;
+        email: string;
+        phone: string;
+        address: string;
+        city: string;
+        state: string;
+        pincode: string;
+    };
+    items: OrderItem[];
+    pricing: {
+        total: number;
+        subtotal: number;
+        shipping: number;
+    };
+    timeline: OrderTimeline[];
+}
 
 export default function AdminOrders() {
-    const [orders, setOrders] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [orders, setOrders] = useState<Order[]>([]);
     const [search, setSearch] = useState("");
-    const [selectedOrder, setSelectedOrder] = useState<any>(null);
+    const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
     useEffect(() => {
         const ordersRef = ref(db, 'orders');
         const unsubscribe = onValue(ordersRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                setOrders(Object.values(data).sort((a: any, b: any) => b.timestamp - a.timestamp));
+                setOrders(Object.values(data as Record<string, Order>).sort((a, b) => b.timestamp - a.timestamp));
             }
-            setLoading(false);
         });
         return () => unsubscribe();
     }, []);
@@ -39,7 +71,7 @@ export default function AdminOrders() {
     const togglePaymentReceived = async (orderId: string, currentStatus: boolean) => {
         const ordersRef = ref(db, 'orders');
         onValue(ordersRef, async (snapshot) => {
-            const data = snapshot.val();
+            const data = snapshot.val() as Record<string, Order> | null;
             if (data) {
                 const key = Object.keys(data).find(k => data[k].orderId === orderId);
                 if (key) {
@@ -52,7 +84,7 @@ export default function AdminOrders() {
     const updateStatus = async (orderId: string, newStatus: string) => {
         const ordersRef = ref(db, 'orders');
         onValue(ordersRef, async (snapshot) => {
-            const data = snapshot.val();
+            const data = snapshot.val() as Record<string, Order> | null;
             if (data) {
                 const key = Object.keys(data).find(k => data[k].orderId === orderId);
                 if (key) {
@@ -227,10 +259,12 @@ export default function AdminOrders() {
                                     <section>
                                         <h4 className="text-xs font-black uppercase text-zinc-400 tracking-widest mb-4">Items Summary</h4>
                                         <div className="space-y-4">
-                                            {selectedOrder.items.map((item: any, i: number) => (
+                                            {selectedOrder.items.map((item, i) => (
                                                 <div key={i} className="flex gap-4 items-center p-4 bg-zinc-50 rounded-2xl border border-zinc-100">
                                                     <div className="w-12 h-12 bg-white rounded-xl border border-border overflow-hidden relative">
-                                                        <img src={item.image} alt="" className="object-cover w-full h-full" />
+                                                        {item.image && (
+                                                            <Image src={item.image} alt="" fill className="object-cover" />
+                                                        )}
                                                     </div>
                                                     <div className="flex-1">
                                                         <p className="text-sm font-bold text-zinc-900">{item.name}</p>
@@ -244,7 +278,7 @@ export default function AdminOrders() {
                                     <section>
                                         <h4 className="text-xs font-black uppercase text-zinc-400 tracking-widest mb-4">Delivery Timeline</h4>
                                         <div className="space-y-4">
-                                            {selectedOrder.timeline.map((t: any, i: number) => (
+                                            {selectedOrder.timeline.map((t, i) => (
                                                 <div key={i} className="flex gap-4 relative">
                                                     <div className="w-2 h-2 rounded-full bg-primary mt-1.5 shrink-0 z-10" />
                                                     {i !== selectedOrder.timeline.length - 1 && <div className="absolute left-[3.5px] top-4 bottom-0 w-px bg-zinc-100" />}

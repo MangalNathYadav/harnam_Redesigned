@@ -1,0 +1,66 @@
+
+> harnam-foods@0.1.0 lint
+> eslint
+
+
+/home/shadowxg/demonlord/src/app/admin/contacts/page.tsx
+  35:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/shadowxg/demonlord/src/app/admin/users/page.tsx
+  17:55  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/shadowxg/demonlord/src/app/orders/page.tsx
+  44:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/home/shadowxg/demonlord/src/app/orders/page.tsx:44:13
+  42 |         const guestId = localStorage.getItem("guestId");
+  43 |         if (!user && !guestId) {
+> 44 |             setLoading(false);
+     |             ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  45 |             return;
+  46 |         }
+  47 |  react-hooks/set-state-in-effect
+
+/home/shadowxg/demonlord/src/app/products/[id]/page.tsx
+  92:81  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/shadowxg/demonlord/src/app/products/page.tsx
+   56:75  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  111:18  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+  134:18  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+
+/home/shadowxg/demonlord/src/app/profile/page.tsx
+  28:57  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  29:59  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  31:12  warning  'loading' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  44:82  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  45:62  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  45:86  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+
+/home/shadowxg/demonlord/src/components/Hero.tsx
+   5:31  warning  'useMemo' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+  30:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/home/shadowxg/demonlord/src/components/Hero.tsx:30:13
+  28 |
+  29 |         if (effect === 'winter' || effect === 'christmas') {
+> 30 |             setParticles([...Array(30)].map(() => ({
+     |             ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  31 |                 type: 'snow' as const,
+  32 |                 width: Math.random() * 6 + 2,
+  33 |                 height: Math.random() * 6 + 2,  react-hooks/set-state-in-effect
+
+✖ 15 problems (11 errors, 4 warnings)
+

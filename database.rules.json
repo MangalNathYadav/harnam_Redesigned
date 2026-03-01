@@ -2,42 +2,31 @@
     "rules": {
         "site_presets": {
             ".read": true,
-            ".write": "auth != null && (auth.token.email === 'admin@harnamfoods.com' || auth.token.email === 'shadowxg@gmail.com')"
+            ".write": true
         },
         "products": {
             ".read": true,
-            ".write": "auth != null && (auth.token.email === 'admin@harnamfoods.com' || auth.token.email === 'shadowxg@gmail.com')"
+            ".write": true
         },
         "orders": {
-            ".read": "auth != null && (auth.token.email === 'admin@harnamfoods.com' || auth.token.email === 'shadowxg@gmail.com')",
-            "$orderId": {
-                ".read": "auth != null && (data.child('userId').val() === auth.uid || auth.token.email === 'admin@harnamfoods.com' || auth.token.email === 'shadowxg@gmail.com')",
-                ".write": "auth != null"
-            }
+            ".read": true,
+            ".write": true
         },
         "users": {
-            "$uid": {
-                ".read": "auth != null && (auth.uid === $uid || auth.token.email === 'admin@harnamfoods.com' || auth.token.email === 'shadowxg@gmail.com')",
-                ".write": "auth != null && (auth.uid === $uid || auth.token.email === 'admin@harnamfoods.com' || auth.token.email === 'shadowxg@gmail.com')"
-            }
+            ".read": true,
+            ".write": true
         },
         "guest_carts": {
-            "$guestId": {
-                ".read": true,
-                ".write": true
-            }
+            ".read": true,
+            ".write": true
         },
-        "messages": {
-            ".read": "auth != null && (auth.token.email === 'admin@harnamfoods.com' || auth.token.email === 'shadowxg@gmail.com')",
-            "$messageId": {
-                ".write": true
-            }
+        "contacts": {
+            ".read": true,
+            ".write": true
         },
         "activity_logs": {
-            ".read": "auth != null && (auth.token.email === 'admin@harnamfoods.com' || auth.token.email === 'shadowxg@gmail.com')",
-            ".write": "auth != null"
-        },
-        ".read": false,
-        ".write": false
+            ".read": true,
+            ".write": true
+        }
     }
 }

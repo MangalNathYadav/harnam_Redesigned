@@ -8,15 +8,27 @@ import {
     ShoppingBag,
     TrendingUp,
     IndianRupee,
-    ArrowUpRight,
     Clock,
-    CheckCircle2,
     Sparkles,
     Plus,
     Palette
 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+
+interface Order {
+    orderId: string;
+    timestamp: number;
+    status: string;
+    customer: {
+        firstName: string;
+        lastName: string;
+        city: string;
+    };
+    pricing: {
+        total: number;
+    };
+}
 
 export default function AdminDashboard() {
     const [metrics, setMetrics] = useState({
@@ -25,16 +37,16 @@ export default function AdminDashboard() {
         totalUsers: 0,
         pendingOrders: 0
     });
-    const [recentOrders, setRecentOrders] = useState<any[]>([]);
+    const [recentOrders, setRecentOrders] = useState<Order[]>([]);
 
     useEffect(() => {
         const ordersRef = ref(db, 'orders');
         onValue(ordersRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                const orders = Object.values(data);
-                const revenue = orders.reduce((sum: number, o: any) => sum + (o.pricing?.total || 0), 0);
-                const pending = orders.filter((o: any) => o.status === "Processing" || o.status === "Placed").length;
+                const orders = Object.values(data as Record<string, Order>);
+                const revenue = orders.reduce((sum: number, o) => sum + (o.pricing?.total || 0), 0);
+                const pending = orders.filter((o) => o.status === "Processing" || o.status === "Placed").length;
 
                 setMetrics(prev => ({
                     ...prev,
@@ -43,7 +55,7 @@ export default function AdminDashboard() {
                     pendingOrders: pending
                 }));
 
-                setRecentOrders(orders.sort((a: any, b: any) => b.timestamp - a.timestamp).slice(0, 5));
+                setRecentOrders(orders.sort((a, b) => b.timestamp - a.timestamp).slice(0, 5));
             }
         });
 
@@ -67,7 +79,7 @@ export default function AdminDashboard() {
         <div className="space-y-10">
             <div>
                 <h1 className="text-3xl font-black tracking-tight mb-2">Dashboard <span className="gradient-text">Overview</span></h1>
-                <p className="text-zinc-400 font-bold text-sm">Welcome back! Here's what's happening today.</p>
+                <p className="text-zinc-400 font-bold text-sm">Welcome back! Here&apos;s what&apos;s happening today.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -98,7 +110,7 @@ export default function AdminDashboard() {
                 <div className="lg:col-span-2 bg-white rounded-[2.5rem] border border-border p-8 shadow-sm">
                     <div className="flex justify-between items-center mb-8">
                         <h3 className="text-xl font-black">Recent Orders</h3>
-                        <button className="text-xs font-bold text-primary hover:underline">View All</button>
+                        <Link href="/admin/orders" className="text-xs font-bold text-primary hover:underline">View All</Link>
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full text-left">

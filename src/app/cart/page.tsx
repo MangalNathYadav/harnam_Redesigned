@@ -7,8 +7,9 @@ import { useRouter } from "next/navigation";
 import { db } from "@/lib/firebase";
 import { ref, onValue, set, get } from "firebase/database";
 import { useAuth } from "@/context/AuthContext";
-import { ShoppingCart, Plus, Minus, Trash2, ArrowRight, ShoppingBag, CreditCard, Zap } from "lucide-react";
+import { Plus, Minus, Trash2, ArrowRight, ShoppingBag, CreditCard, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { SitePresets } from "@/types/database";
 
 interface CartItem {
     id: string;
@@ -27,14 +28,17 @@ export default function CartPage() {
     const [guestId, setGuestId] = useState("");
 
     useEffect(() => {
-        const gid = localStorage.getItem("guestId");
-        if (gid) setGuestId(gid);
+        const timer = setTimeout(() => {
+            const gid = localStorage.getItem("guestId");
+            if (gid) setGuestId(gid);
+        }, 0);
+        return () => clearTimeout(timer);
     }, []);
 
     useEffect(() => {
         if (!guestId && !user) {
-            setLoading(false);
-            return;
+            const timer = setTimeout(() => setLoading(false), 0);
+            return () => clearTimeout(timer);
         }
         const cartPath = user ? `users/${user.uid}/cart` : `guest_carts/${guestId}/cart`;
         const cartRef = ref(db, cartPath);
@@ -80,7 +84,7 @@ export default function CartPage() {
         updateQuantity(productId, -9999);
     };
 
-    const [presets, setPresets] = useState<any>(null);
+    const [presets, setPresets] = useState<SitePresets | null>(null);
 
     useEffect(() => {
         onValue(ref(db, 'site_presets'), (snapshot) => {
@@ -196,7 +200,7 @@ export default function CartPage() {
                                 </div>
                                 {discountAmount > 0 && (
                                     <div className="flex justify-between text-sm text-green-600 bg-green-50 p-2 rounded-lg border border-green-100 italic">
-                                        <span className="flex items-center gap-2 font-bold"><Zap size={14} /> {presets.festivalName} Discount</span>
+                                        <span className="flex items-center gap-2 font-bold"><Zap size={14} /> {presets?.festivalName || "Festival"} Discount</span>
                                         <span className="font-bold">-₹{discountAmount.toFixed(2)}</span>
                                     </div>
                                 )}

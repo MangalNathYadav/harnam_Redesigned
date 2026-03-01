@@ -6,7 +6,7 @@ import { db } from "@/lib/firebase";
 import { ref, onValue, set, get } from "firebase/database";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-import { ShoppingCart, Search, Filter, Star, Info, ChevronRight, Plus, Minus } from "lucide-react";
+import { Search, Star, Info, Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Product {
@@ -40,10 +40,11 @@ export default function ProductsPage() {
     useEffect(() => {
         let gid = localStorage.getItem("guestId");
         if (!gid || !gid.startsWith("guest_")) {
-            gid = "guest_" + Math.random().toString(36).substr(2, 12);
+            gid = "guest_" + Math.random().toString(36).substring(2, 14);
             localStorage.setItem("guestId", gid);
         }
-        setGuestId(gid);
+        const timer = setTimeout(() => setGuestId(gid as string), 0);
+        return () => clearTimeout(timer);
     }, []);
 
     // Sync Products from Firebase
@@ -52,16 +53,16 @@ export default function ProductsPage() {
         const unsubscribe = onValue(productsRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                const productList = Object.entries(data).map(([id, val]: [string, any]) => ({
+                const productList = Object.entries(data as Record<string, Record<string, unknown>>).map(([id, val]) => ({
                     id,
-                    name: val.name || "",
-                    description: val.description || "",
-                    price: val.price || 0,
-                    stock: val.stock ?? val.inStock ?? 0,
-                    category: val.category || "all",
-                    image: val.imageBase64 || val.image || "/placeholder.png",
-                    rating: val.rating || 4.5,
-                    offer: val.offer || "",
+                    name: (val.name as string) || "",
+                    description: (val.description as string) || "",
+                    price: (val.price as number) || 0,
+                    stock: (val.stock as number) ?? (val.inStock as number) ?? 0,
+                    category: (val.category as string) || "all",
+                    image: (val.imageBase64 as string) || (val.image as string) || "/placeholder.png",
+                    rating: (val.rating as number) || 4.5,
+                    offer: (val.offer as string) || "",
                 }));
                 setProducts(productList);
             }
@@ -107,7 +108,7 @@ export default function ProductsPage() {
 
             await set(cartRef, currentCart);
             showNotification(`${product.name} added to cart`, "success");
-        } catch (error) {
+        } catch {
             showNotification("Failed to add to cart", "error");
         }
     };
@@ -130,7 +131,7 @@ export default function ProductsPage() {
             }).filter(item => item.quantity > 0);
 
             await set(cartRef, updatedCart);
-        } catch (error) {
+        } catch {
             showNotification("Update failed", "error");
         }
     };

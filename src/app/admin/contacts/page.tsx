@@ -5,18 +5,24 @@ import { db } from "@/lib/firebase";
 import { ref, onValue, remove } from "firebase/database";
 import {
     MessageSquare,
-    User,
     Mail,
-    Calendar,
     Trash2,
     CheckCircle2,
-    Clock,
-    XCircle
+    Clock
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+
+interface ContactMessage {
+    firebaseId: string;
+    name: string;
+    email: string;
+    phone?: string;
+    message: string;
+    timestamp: number;
+}
 
 export default function AdminContacts() {
-    const [messages, setMessages] = useState<any[]>([]);
+    const [messages, setMessages] = useState<ContactMessage[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -25,13 +31,18 @@ export default function AdminContacts() {
         const unsubscribe = onValue(contactsRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                setMessages(Object.entries(data).map(([id, val]: [string, any]) => ({
-                    ...val,
+                const formatted = Object.entries(data as Record<string, unknown>).map(([id, val]) => ({
+                    ...(val as Omit<ContactMessage, 'firebaseId'>),
                     firebaseId: id
-                })).sort((a: any, b: any) => b.timestamp - a.timestamp));
+                } as ContactMessage)).sort((a, b) => b.timestamp - a.timestamp);
+                setMessages(formatted);
             } else {
                 setMessages([]);
             }
+            const timer = setTimeout(() => setLoading(false), 0);
+            return () => clearTimeout(timer);
+        }, (error) => {
+            console.error("Firebase fetch error:", error);
             setLoading(false);
         });
         return () => unsubscribe();
@@ -58,7 +69,7 @@ export default function AdminContacts() {
                 <div className="bg-white rounded-[2.5rem] border border-border p-20 text-center">
                     <MessageSquare size={48} className="mx-auto text-zinc-200 mb-6" />
                     <h3 className="text-xl font-bold text-zinc-900">No messages yet</h3>
-                    <p className="text-zinc-500 max-w-xs mx-auto mt-2">All quiet on the customer front. We'll update you here as soon as someone reaches out.</p>
+                    <p className="text-zinc-500 max-w-xs mx-auto mt-2">All quiet on the customer front. We&apos;ll update you here as soon as someone reaches out.</p>
                 </div>
             ) : (
                 <div className="grid gap-6">
@@ -98,7 +109,7 @@ export default function AdminContacts() {
                                     <div className="bg-zinc-50/50 p-6 rounded-3xl border border-zinc-50 min-h-[100px] relative">
                                         <span className="absolute top-4 right-4 text-primary opacity-20"><MessageSquare size={32} /></span>
                                         <p className="text-sm font-medium text-zinc-600 leading-relaxed italic">
-                                            "{item.message}"
+                                            &ldquo;{item.message}&rdquo;
                                         </p>
                                     </div>
                                 </div>
