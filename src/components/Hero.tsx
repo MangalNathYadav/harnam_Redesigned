@@ -221,28 +221,28 @@ const Hero = () => {
             </AnimatePresence>
 
             {/* Content Section */}
-            <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="relative z-20 max-w-5xl px-4"
-            >
-                <motion.div variants={itemVariants} className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full mb-8">
+            <div className="relative z-20 max-w-5xl px-4">
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full mb-8"
+                >
                     {presets?.isFestivalMode ? <Flame className="w-4 h-4 text-secondary animate-pulse" /> : <Sparkles className="w-4 h-4 text-secondary" />}
                     <span className="text-[10px] font-bold text-white uppercase tracking-[0.3em]">
                         {presets?.isFestivalMode ? presets.festivalName : "Premium Quality Spices"}
                     </span>
                 </motion.div>
 
-                <motion.h1 variants={itemVariants} className="text-5xl md:text-8xl font-black mb-8 text-white tracking-tighter leading-[0.9] drop-shadow-2xl">
+                <h1 className="text-5xl md:text-8xl font-black mb-8 text-white tracking-tighter leading-[0.9] drop-shadow-2xl">
                     Authentic <br /> <span className="text-secondary italic">Indian Spices</span>
-                </motion.h1>
+                </h1>
 
-                <motion.p variants={itemVariants} className="text-white/80 text-lg md:text-2xl mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
+                <p className="text-white/80 text-lg md:text-2xl mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
                     {presets?.isFestivalMode ? presets.offerBanner : "Experience the rich, handcrafted legacy of traditional Indian spices, curated for the modern palate."}
-                </motion.p>
+                </p>
 
-                <motion.div variants={itemVariants}>
+                <div>
                     <Link
                         href="/products"
                         className="relative overflow-hidden bg-secondary hover:bg-secondary/90 text-white font-black px-12 py-6 rounded-full shadow-[0_20px_50px_rgba(234,179,8,0.3)] transition-all flex items-center gap-4 mx-auto w-fit group"
@@ -253,8 +253,8 @@ const Hero = () => {
                         <span className="relative z-10 text-lg">Explore Products</span>
                         <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform relative z-10" />
                     </Link>
-                </motion.div>
-            </motion.div>
+                </div>
+            </div>
 
             {/* Scroll Down Indicator */}
             <motion.div
