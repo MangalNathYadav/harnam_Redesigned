@@ -198,6 +198,7 @@ const Hero = () => {
                         src={presets.heroVideo}
                         alt="Premium Spices Hero"
                         fill
+                        sizes="100vw"
                         className="object-cover"
                         priority
                         onError={() => setImageError(true)}

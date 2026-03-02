@@ -46,6 +46,7 @@ const AboutBrand = () => {
                             src="/assets/about_plantation.png"
                             alt="Spice Plantation"
                             fill
+                            sizes="(max-width: 1024px) 100vw, 50vw"
                             className="object-cover"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
