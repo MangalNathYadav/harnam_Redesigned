@@ -141,18 +141,17 @@ const Hero = () => {
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.2,
-                delayChildren: 0.3,
+                staggerChildren: 0.1,
+                delayChildren: 0.1,
             }
         }
     };
 
     const itemVariants: Variants = {
-        hidden: { opacity: 0, y: 30 },
+        hidden: { opacity: 0 },
         visible: {
             opacity: 1,
-            y: 0,
-            transition: { duration: 0.8, ease: "easeOut" }
+            transition: { duration: 0.4, ease: "easeOut" }
         }
     };
 
@@ -204,7 +203,7 @@ const Hero = () => {
                         onError={() => setImageError(true)}
                     />
                 )}
-                <div className={`absolute inset-0 ${getThemeOverlay()} backdrop-blur-[1px]`}></div>
+                <div className={`absolute inset-0 ${getThemeOverlay()}`}></div>
             </motion.div>
 
             <EnvironmentalEffects presets={presets} />
