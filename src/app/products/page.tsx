@@ -150,7 +150,7 @@ export default function ProductsPage() {
         });
 
     return (
-        <div className="min-h-screen bg-[#fdfcfd] pt-20 pb-20">
+        <div className="min-h-screen bg-[#fdfcfd] pt-32 md:pt-40 pb-20">
             <div className="container mx-auto px-6">
                 {/* Search & Filters */}
                 <div className="flex flex-col md:flex-row gap-4 mb-12 items-center justify-between animate-in">

@@ -47,7 +47,7 @@ const FloatingInfo = () => {
                             </div>
 
                             <p className="text-gray-600 mb-8 font-medium leading-relaxed">
-                                Experience the authentic taste of India with our premium, handcrafted spice collection. Quality you can trust since 1985.
+                                Experience the authentic taste of India with our premium, handcrafted spice collection. Quality you can trust since 2025.
                             </p>
 
                             <div className="grid grid-cols-2 gap-4 mb-8">

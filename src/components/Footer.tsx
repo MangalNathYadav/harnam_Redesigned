@@ -22,11 +22,9 @@ const Footer = () => {
                             Redefining the digital shopping experience with premium spices and smooth interactions. Experience the true taste of tradition.
                         </p>
                         <div className="flex gap-4">
-                            {[Instagram, Facebook, Twitter].map((Icon, i) => (
-                                <a key={i} href="#" className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary smooth-transition">
-                                    <Icon className="w-4 h-4" />
-                                </a>
-                            ))}
+                            <a href="https://www.instagram.com/harnam_masale/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary smooth-transition">
+                                <Instagram className="w-4 h-4" />
+                            </a>
                         </div>
                     </div>
 
@@ -44,7 +42,6 @@ const Footer = () => {
                         <ul className="space-y-4 text-sm text-muted-foreground">
                             <li><a href="#" className="hover:text-primary smooth-transition">Contact Us</a></li>
                             <li><a href="#" className="hover:text-primary smooth-transition">Shipping Policy</a></li>
-                            <li><a href="#" className="hover:text-primary smooth-transition">Returns & Refunds</a></li>
                             <li><a href="#" className="hover:text-primary smooth-transition">FAQs</a></li>
                         </ul>
                     </div>
@@ -54,15 +51,15 @@ const Footer = () => {
                         <ul className="space-y-4 text-sm text-muted-foreground">
                             <li className="flex items-center gap-3">
                                 <Mail className="w-4 h-4 text-primary" />
-                                <span>hello@harnamfoods.com</span>
+                                <span>harnammasale@gmail.com</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Phone className="w-4 h-4 text-primary" />
-                                <span>+91 98765 43210</span>
+                                <span>+91 8840838599</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <MapPin className="w-4 h-4 text-primary" />
-                                <span>Delhi, India</span>
+                                <span>Awas Vikas Hanspuram, Naubasta Kanpur</span>
                             </li>
                         </ul>
                     </div>

@@ -13,6 +13,9 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import imageCompression from "browser-image-compression";
+import { uploadToCloudinary } from "@/lib/cloudinary";
+
 
 interface Product {
     firebaseId: string;
@@ -42,6 +45,10 @@ export default function AdminProducts() {
         rating: 4.8,
         offer: ""
     });
+    const [uploading, setUploading] = useState(false);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
 
     useEffect(() => {
         const productsRef = ref(db, 'products');
@@ -57,30 +64,67 @@ export default function AdminProducts() {
         return () => unsubscribe();
     }, []);
 
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setSelectedFile(file);
+        setPreviewUrl(URL.createObjectURL(file));
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const productsRef = ref(db, 'products');
+        setUploading(true);
 
-        if (editingProduct) {
-            await set(ref(db, `products/${editingProduct.firebaseId}`), {
-                ...form,
-                id: editingProduct.id
+        try {
+            let finalImageUrl = form.image;
+
+            if (selectedFile) {
+                // Convert to WebP and compress
+                const options = {
+                    maxSizeMB: 1,
+                    maxWidthOrHeight: 1920,
+                    useWebWorker: true,
+                    fileType: "image/webp"
+                };
+
+                const compressedFile = await imageCompression(selectedFile, options);
+                finalImageUrl = await uploadToCloudinary(compressedFile);
+            }
+
+            const productsRef = ref(db, 'products');
+
+            if (editingProduct) {
+                await set(ref(db, `products/${editingProduct.firebaseId}`), {
+                    ...form,
+                    image: finalImageUrl,
+                    id: editingProduct.id
+                });
+            } else {
+                const newProdRef = push(productsRef);
+                await set(newProdRef, {
+                    ...form,
+                    image: finalImageUrl,
+                    id: `p${Date.now()}`
+                });
+            }
+
+            setIsModalOpen(false);
+            setEditingProduct(null);
+            setSelectedFile(null);
+            setPreviewUrl(null);
+            setForm({
+                name: "", description: "", price: 0, category: "Veg",
+                stock: 50, image: "/assets/images/sabji.jpeg", rating: 4.8, offer: ""
             });
-        } else {
-            const newProdRef = push(productsRef);
-            await set(newProdRef, {
-                ...form,
-                id: `p${Date.now()}`
-            });
+        } catch (error) {
+            console.error("Upload failed:", error);
+            alert("Failed to save product. Check console for details.");
+        } finally {
+            setUploading(false);
         }
-
-        setIsModalOpen(false);
-        setEditingProduct(null);
-        setForm({
-            name: "", description: "", price: 0, category: "Veg",
-            stock: 50, image: "/assets/images/sabji.jpeg", rating: 4.8, offer: ""
-        });
     };
+
 
     const deleteProduct = async (firebaseId: string) => {
         if (confirm("Are you sure you want to delete this spice?")) {
@@ -134,6 +178,7 @@ export default function AdminProducts() {
                                     onClick={() => {
                                         setEditingProduct(product);
                                         setForm({ ...product });
+                                        setPreviewUrl(product.image);
                                         setIsModalOpen(true);
                                     }}
                                     className="p-3 bg-white/20 backdrop-blur-md rounded-xl hover:bg-white/40 transition-colors"
@@ -214,17 +259,71 @@ export default function AdminProducts() {
                                     </div>
                                 </div>
 
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-4">Image Source</label>
-                                    <input required className="checkout-input" value={form.image} onChange={e => setForm({ ...form, image: e.target.value })} placeholder="/assets/images/..." />
+                                <div className="space-y-4">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-4">Product Image</label>
+                                    <div className="flex flex-col items-center gap-4 p-6 border-2 border-dashed border-zinc-100 rounded-[2rem] bg-zinc-50/50 hover:bg-zinc-50 smooth-transition">
+                                        {previewUrl ? (
+                                            <div className="relative w-full h-48 rounded-2xl overflow-hidden shadow-inner">
+                                                <Image src={previewUrl} alt="Preview" fill className="object-cover" />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setSelectedFile(null);
+                                                        setPreviewUrl(null);
+                                                    }}
+                                                    className="absolute top-4 right-4 p-2 bg-red-500/80 backdrop-blur-sm text-white rounded-xl hover:bg-red-600 transition-colors"
+                                                >
+                                                    <Trash2 size={14} />
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            <div className="flex flex-col items-center gap-2 py-8">
+                                                <div className="p-4 bg-white rounded-2xl shadow-sm">
+                                                    <Package className="w-8 h-8 text-zinc-300" />
+                                                </div>
+                                                <p className="text-xs font-bold text-zinc-400 mt-2">Drop your image here or browse</p>
+                                            </div>
+                                        )}
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={handleFileChange}
+                                            className="hidden"
+                                            id="product-image"
+                                        />
+                                        <label
+                                            htmlFor="product-image"
+                                            className="px-6 py-2 bg-white border border-zinc-200 rounded-xl text-[10px] font-black uppercase tracking-widest cursor-pointer hover:bg-zinc-100 transition-colors shadow-sm"
+                                        >
+                                            {previewUrl ? "Change Image" : "Choose File"}
+                                        </label>
+                                    </div>
                                 </div>
 
                                 <div className="flex gap-4 pt-6">
-                                    <button type="button" onClick={() => setIsModalOpen(false)} className="checkout-btn-secondary px-8">Discard</button>
-                                    <button type="submit" className="checkout-btn flex-1 h-14 uppercase tracking-widest text-xs">
-                                        {editingProduct ? "Update Spice" : "Publish to Store"}
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setIsModalOpen(false);
+                                            setSelectedFile(null);
+                                            setPreviewUrl(null);
+                                        }}
+                                        className="checkout-btn-secondary px-8"
+                                    >
+                                        Discard
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        disabled={uploading}
+                                        className="checkout-btn flex-1 h-14 uppercase tracking-widest text-xs disabled:opacity-50 disabled:cursor-not-allowed group relative overflow-hidden"
+                                    >
+                                        {uploading ? "Processing..." : (editingProduct ? "Update Spice" : "Publish to Store")}
+                                        {uploading && (
+                                            <div className="absolute inset-0 bg-primary/10 animate-pulse"></div>
+                                        )}
                                     </button>
                                 </div>
+
                             </form>
                         </motion.div>
                     </div>

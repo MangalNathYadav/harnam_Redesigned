@@ -74,7 +74,7 @@ const Navbar = () => {
                             </Link>
                             <div className="flex flex-col">
                                 <span className="text-[15px] font-black tracking-tighter uppercase leading-none text-zinc-900">Harnam <span className="text-primary">Masale</span></span>
-                                <span className="text-[11px] font-bold text-zinc-400 leading-none mt-1">Purity in every pinch ✨</span>
+                                <span className="text-[11px] font-bold text-zinc-400 leading-none mt-1">परंपरा की खुशबू, स्वाद का भरोसा !</span>
                             </div>
                         </div>
 
@@ -101,7 +101,7 @@ const Navbar = () => {
                             </Link>
                             <div className="flex flex-col">
                                 <span className={`text-sm font-black tracking-tighter uppercase leading-none ${scrolled ? "text-zinc-900" : "text-white"}`}>Harnam <span className="text-primary">Masale</span></span>
-                                <span className={`text-[10px] font-bold leading-none mt-1 ${scrolled ? "text-zinc-400" : "text-white/60"}`}>Purity in every pinch ✨</span>
+                                <span className={`text-[10px] font-bold leading-none mt-1 ${scrolled ? "text-zinc-400" : "text-white/60"}`}>परंपरा की खुशबू, स्वाद का भरोसा !</span>
                             </div>
                         </div>
 
@@ -179,19 +179,17 @@ const Navbar = () => {
                             </div>
                             <div className="space-y-4">
                                 <div className="flex items-center gap-2 text-primary lowercase tracking-normal font-bold">
-                                    <Mail className="w-3 h-3" /> hello@harnam.com
+                                    <Mail className="w-3 h-3" /> harnammasale@gmail.com
                                 </div>
                                 <div className="flex items-center gap-2 text-primary lowercase tracking-normal font-bold">
-                                    <Phone className="w-3 h-3" /> +91 9876543210
+                                    <Phone className="w-3 h-3" /> +91 8840838599
                                 </div>
                             </div>
                         </div>
                         <div className="flex gap-4 pt-6 border-t border-black/5">
-                            {[Instagram, Facebook, Twitter].map((Icon, i) => (
-                                <button key={i} className="w-10 h-10 rounded-xl bg-black/5 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                    <Icon className="w-4 h-4" />
-                                </button>
-                            ))}
+                            <a href="https://www.instagram.com/harnam_masale/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-black/5 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                                <Instagram className="w-4 h-4" />
+                            </a>
                         </div>
                     </motion.div>
                 )}

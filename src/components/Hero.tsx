@@ -200,6 +200,8 @@ const Hero = () => {
                         sizes="100vw"
                         className="object-cover"
                         priority
+                        loading="eager"
+                        fetchPriority="high"
                         onError={() => setImageError(true)}
                     />
                 )}
@@ -221,7 +223,8 @@ const Hero = () => {
             </AnimatePresence>
 
             {/* Content Section */}
-            <div className="relative z-20 max-w-5xl px-4">
+            <div className="relative z-20 max-w-5xl px-6 md:px-4">
+
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -245,14 +248,15 @@ const Hero = () => {
                 <div>
                     <Link
                         href="/products"
-                        className="relative overflow-hidden bg-secondary hover:bg-secondary/90 text-white font-black px-12 py-6 rounded-full shadow-[0_20px_50px_rgba(234,179,8,0.3)] transition-all flex items-center gap-4 mx-auto w-fit group"
+                        className="relative overflow-hidden bg-secondary hover:bg-secondary/90 text-white font-black px-8 py-4 md:px-12 md:py-6 rounded-full shadow-[0_20px_50px_rgba(234,179,8,0.3)] transition-all flex items-center gap-4 mx-auto w-fit group"
                     >
                         {/* Shimmer Effect */}
                         <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-25deg] -translate-x-full group-hover:animate-shimmer"></div>
 
-                        <span className="relative z-10 text-lg">Explore Products</span>
-                        <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform relative z-10" />
+                        <span className="relative z-10 text-base md:text-lg">Explore Products</span>
+                        <ArrowRight className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-2 transition-transform relative z-10" />
                     </Link>
+
                 </div>
             </div>
 

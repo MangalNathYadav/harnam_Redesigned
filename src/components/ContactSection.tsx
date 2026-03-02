@@ -39,7 +39,7 @@ const ContactSection = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         {[
                             { icon: MapPin, title: "Our Store", val: "Awas Vikas Hanspuram, Naubasta Kanpur" },
-                            { icon: Phone, title: "Support", val: "+91 95114 45672" },
+                            { icon: Phone, title: "Support", val: "+91 8840838599" },
                             { icon: Mail, title: "Email", val: "harnammasale@gmail.com" },
                             { icon: Clock, title: "Business Hours", val: "Mon - Sat: 9:00 AM - 6:00 PM" }
                         ].map((item, i) => (

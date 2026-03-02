@@ -7,7 +7,7 @@ const WhyChooseUs = () => {
         { icon: Leaf, title: "100% Natural Ingredients" },
         { icon: Scale, title: "Perfectly Balanced Flavors" },
         { icon: Truck, title: "Fast & Safe Delivery" },
-        { icon: Award, title: "Trusted Since 1985" }
+        { icon: Award, title: "Trusted Since 2025" }
     ];
 
     return (

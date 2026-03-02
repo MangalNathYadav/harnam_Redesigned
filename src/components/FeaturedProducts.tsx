@@ -36,7 +36,7 @@ const FeaturedProducts = () => {
 
     return (
         <section className="w-full py-20 px-6 container mx-auto max-w-7xl">
-            <div className="flex items-center justify-between mb-12">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Featured Products</h2>
                 <Link href="/products" className="text-secondary font-bold text-base flex items-center gap-1 hover:underline">
                     View All <ChevronRight className="w-5 h-5" />

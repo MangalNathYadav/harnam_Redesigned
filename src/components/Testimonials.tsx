@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
-import { Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const testimonials = [
@@ -53,8 +52,8 @@ const Testimonials = () => {
                         transition={{ duration: 0.4 }}
                         className="flex flex-col items-center text-center"
                     >
-                        <div className="w-24 h-24 rounded-full overflow-hidden mb-6 border-4 border-white shadow-lg bg-zinc-100">
-                            <Image src={testimonials[index].avatar} alt={testimonials[index].author} width={96} height={96} className="object-cover" />
+                        <div className="w-24 h-24 rounded-full mb-6 border-4 border-white shadow-lg bg-zinc-100 flex items-center justify-center text-zinc-400">
+                            <User className="w-12 h-12" />
                         </div>
                         <div className="flex gap-1 mb-4">
                             {[...Array(testimonials[index].stars)].map((_, i) => (
